@@ -25,10 +25,9 @@ RAW = ROOT / 'store' / 'graphics' / 'raw'
 FILES = {'en': 'registration-form', 'it': 'modulo-iscrizione', 'fr': 'formulaire-inscription',
          'de': 'anmeldeformular', 'es': 'formulario-inscripcion'}
 BIRTH = {'de': '14.05.1988'}
-DEVICES = {  # name -> (width, height, density) ; None keeps the emulator's own screen
-    'phone': None,
-    'tablet7': (1200, 1920, 320),
-    'tablet10': (1600, 2560, 280),
+DEVICES = {  # name -> (width, height, density) override, or None for the emulator's own screen
+    'phone': None,      # AVD compilo16k (Pixel 7, 1080 x 2400)
+    'tablet10': None,   # AVD compilo10 (Pixel Tablet, 2560 x 1600). Forcing `wm size` made System UI ANR.
 }
 # Material's tooltips, which is how the app bar buttons are announced in each language.
 BACK = '^(Back|Indietro|Retour|Zurück|Atrás)$'

@@ -107,5 +107,8 @@ def back():
 
 
 def size():
-    m = re.search(r'(\d+)x(\d+)', shell('wm', 'size'))
-    return int(m.group(1)), int(m.group(2))
+    """Current screen size in pixels, rotation included (read from a real capture)."""
+    import io
+
+    from PIL import Image
+    return Image.open(io.BytesIO(adb('exec-out', 'screencap', '-p', binary=True))).size

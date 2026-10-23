@@ -1,9 +1,9 @@
 """Composes the Play Store graphics from the raw emulator captures.
 
     python store/tools/make_graphics.py            # all languages, phone + feature graphic
-    python store/tools/make_graphics.py tablet7 tablet10
+    python store/tools/make_graphics.py tablet10
 
-Output: store/graphics/screenshots/<device>/<play-locale>/NN-name.png and
+Output: store/graphics/screenshots/<device>/<play-locale>/NN-name.png (tablet10: portrait 1600 x 2560) and
         store/graphics/feature/feature-graphic-<play-locale>.png (1024 x 500)
 """
 import sys
@@ -59,7 +59,7 @@ def uri(p):
     return Path(p).resolve().as_uri()
 
 
-def shot_html(w, h, caption, img, *, font, top, phone_w, phone_top):
+def shot_html(w, h, caption, img, *, font, top, phone_w, phone_top, landscape=False):
     left = (w - phone_w) // 2
     return f'''<!doctype html><meta charset="utf-8"><style>
 html,body{{margin:0;padding:0;width:{w}px;height:{h}px;overflow:hidden;background:#0a1d3b}}
@@ -69,7 +69,7 @@ html,body{{margin:0;padding:0;width:{w}px;height:{h}px;overflow:hidden;backgroun
 h1{{position:absolute;left:{int(w*0.07)}px;right:{int(w*0.07)}px;top:{top}px;margin:0;color:#fff;font-size:{font}px;line-height:1.08;
 font-weight:800;letter-spacing:-.02em;text-wrap:balance}}
 .p{{position:absolute;left:{left}px;top:{phone_top}px;width:{phone_w}px;border:{max(8, w // 100)}px solid #070f1f;border-bottom:none;
-border-radius:{int(phone_w*0.075)}px {int(phone_w*0.075)}px 0 0;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.5);background:#fff}}
+border-radius:{int(min(phone_w, 1000)*0.075)}px {int(min(phone_w, 1000)*0.075)}px 0 0;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.5);background:#fff}}
 .p img{{display:block;width:100%}}
 </style><div class="s"><div class="c1"></div><div class="c2"></div><h1>{caption}</h1>
 <div class="p"><img src="{uri(img)}"></div></div>'''
@@ -102,7 +102,6 @@ p{{position:absolute;left:64px;top:296px;width:470px;margin:0;color:#d4e3f7;font
 def build(devices):
     specs = {
         'phone': dict(w=1080, h=1920, font=78, top=92, phone_w=900, phone_top=420),
-        'tablet7': dict(w=1200, h=1920, font=72, top=84, phone_w=900, phone_top=400),
         'tablet10': dict(w=1600, h=2560, font=96, top=110, phone_w=1240, phone_top=520),
     }
     with tempfile.TemporaryDirectory() as tmp:
@@ -125,7 +124,8 @@ def build(devices):
                     n += 1
                     page = Path(tmp) / f'{dev}-{lang}-{raw_name}.html'
                     page.write_text(shot_html(sp['w'], sp['h'], CAPTIONS[lang][key], src, font=sp['font'],
-                                              top=sp['top'], phone_w=sp['phone_w'], phone_top=sp['phone_top']),
+                                              top=sp['top'], phone_w=sp['phone_w'], phone_top=sp['phone_top'],
+                                              landscape=sp.get('landscape', False)),
                                     encoding='utf-8')
                     out = OUT / 'screenshots' / dev / loc / f'{n:02d}-{key}.png'
                     render(page, out, sp['w'], sp['h'])

@@ -25,8 +25,7 @@ store/listings/<lingua>/title|short|full|whatsnew.txt   ← testi della scheda, 
 store/graphics/icon-512.png                  ← icona 512×512
 store/graphics/feature/feature-graphic-<lingua>.png      ← grafica in evidenza 1024×500
 store/graphics/screenshots/phone/<lingua>/   ← 6 screenshot telefono 1080×1920
-store/graphics/screenshots/tablet7/en-US/    ← tablet 7" 1200×1920
-store/graphics/screenshots/tablet10/en-US/   ← tablet 10" 1600×2560
+store/graphics/screenshots/tablet10/en-US/   ← tablet 1600×2560 (da usare per 10" e, se vuoi, anche per 7")
 ```
 
 Lingue della scheda: `en-US`, `it-IT`, `fr-FR`, `de-DE`, `es-ES`.
@@ -84,7 +83,7 @@ completo). I file arrivano dal selettore di Android o dalla condivisione da un'a
 - **Icona** ← `store/graphics/icon-512.png`
 - **Grafica in evidenza** ← `store/graphics/feature/feature-graphic-<lingua>.png`
 - **Screenshot telefono** (min 2, max 8) ← `store/graphics/screenshots/phone/<lingua>/`
-- **Screenshot tablet 7" e 10"** ← cartelle `tablet7` e `tablet10` (le stesse per tutte le lingue)
+- **Screenshot tablet** (facoltativi, ma migliorano la visibilità sui tablet) ← cartella `tablet10`; puoi caricare le stesse immagini nello slot 7" e in quello 10"
 - Categoria: **Produttività** · Email, sito web e privacy policy come in tabella.
 
 Se per una lingua non carichi immagini proprie, la Console mostra quelle della lingua predefinita.

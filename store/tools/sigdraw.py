@@ -44,8 +44,9 @@ def stroke(points):
 
 
 def signature(w=1080, h=2400):
-    """Scaled to the screen: starts 11% from the left, just under the middle of the pad."""
-    left, top, scale = int(w * 0.11), int(h * 0.48), 0.98 * w / 1080
+    """Scaled to the screen and centred a little under the middle of the pad."""
+    scale = 0.98 * min(w / 1080, h / 2000)
+    left, top = int(w / 2 - 400 * scale), int(h * 0.47)
 
     def place(pts):
         return [(left + x * scale, top + y * scale) for x, y in pts]
